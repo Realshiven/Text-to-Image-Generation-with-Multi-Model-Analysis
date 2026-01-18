@@ -1,6 +1,13 @@
-venv/
+# Model weights
+app/sam_vit_b.pth
+*.pth
+
+# Python cache
 __pycache__/
 *.pyc
-.env
+
+# Mac
 .DS_Store
 
+# Virtual env
+venv/
