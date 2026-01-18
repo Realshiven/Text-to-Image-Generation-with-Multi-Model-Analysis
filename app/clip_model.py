@@ -5,11 +5,18 @@ from PIL import Image
 _model = None
 _preprocess = None
 
+
 def get_clip_model():
     global _model, _preprocess
     if _model is None:
         print("Loading CLIP model lazily...")
-        _model, _preprocess = clip.load("ViT-B/32", device="cpu")
+        try:
+            _model, _preprocess = clip.load("ViT-B/32", device="cpu")
+        except Exception as e:
+            raise RuntimeError(
+                "CLIP model download failed. "
+                "Please ensure internet access or pre-download weights."
+            ) from e
     return _model, _preprocess
 
 
@@ -32,3 +39,4 @@ def analyze_image(image: Image.Image):
     return {
         "similarity_scores": similarity.tolist()
     }
+
